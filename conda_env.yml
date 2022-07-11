@@ -1,0 +1,7 @@
+name: pointnet
+dependencies:
+- python=2.7
+- pip
+- pip:
+  - tensorflow==1.0.1
+  - h5py
