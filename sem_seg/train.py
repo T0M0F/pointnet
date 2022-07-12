@@ -1,4 +1,5 @@
 import argparse
+import traceback
 import math
 import h5py
 import numpy as np
@@ -44,6 +45,7 @@ DECAY_RATE = FLAGS.decay_rate
 
 LOG_DIR = FLAGS.log_dir
 if not os.path.exists(LOG_DIR): os.mkdir(LOG_DIR)
+if not os.path.exists(LOG_DIR+"models"): os.mkdir(LOG_DIR+"models")
 os.system('cp model.py %s' % (LOG_DIR)) # bkp of model def
 os.system('cp train.py %s' % (LOG_DIR)) # bkp of train procedure
 LOG_FOUT = open(os.path.join(LOG_DIR, 'log_train.txt'), 'w')
@@ -93,10 +95,11 @@ print(train_data.shape, train_label.shape)
 print(test_data.shape, test_label.shape)
 
 
-def log_string(out_str):
+def log_string(out_str, print_out=True):
     LOG_FOUT.write(out_str+'\n')
     LOG_FOUT.flush()
-    print(out_str)
+    if print_out:
+        print(out_str)
 
 
 def get_learning_rate(batch):
@@ -186,9 +189,9 @@ def train():
             eval_one_epoch(sess, ops, test_writer)
             
             # Save the variables to disk.
-            if epoch % 10 == 0:
-                save_path = saver.save(sess, os.path.join(LOG_DIR, "model.ckpt"))
-                log_string("Model saved in file: %s" % save_path)
+            #if epoch % 10 == 0:
+            save_path = saver.save(sess, os.path.join(LOG_DIR+"models", "model" + str(epoch) + ".ckpt"))
+            log_string("Model saved in file: %s" % save_path)
 
 
 
@@ -201,14 +204,13 @@ def train_one_epoch(sess, ops, train_writer):
     
     file_size = current_data.shape[0]
     num_batches = file_size // BATCH_SIZE
-    
     total_correct = 0
     total_seen = 0
     loss_sum = 0
     
     for batch_idx in tqdm(range(num_batches), desc="Current batch/total batch num"):
         if batch_idx % 10 == 0:
-            log_string('Current batch/total batch num: %d/%d'%(batch_idx,num_batches))
+            log_string('Current batch/total batch num: %d/%d'%(batch_idx,num_batches), print_out=False)
         start_idx = batch_idx * BATCH_SIZE
         end_idx = (batch_idx+1) * BATCH_SIZE
         
@@ -244,7 +246,7 @@ def eval_one_epoch(sess, ops, test_writer):
     file_size = current_data.shape[0]
     num_batches = file_size // BATCH_SIZE
     
-    for batch_idx in range(num_batches):
+    for batch_idx in tqdm(range(num_batches), desc="Eval"):
         start_idx = batch_idx * BATCH_SIZE
         end_idx = (batch_idx+1) * BATCH_SIZE
 
@@ -276,4 +278,5 @@ if __name__ == "__main__":
         LOG_FOUT.close()
     except Exception as e:
         print(e)
+        traceback.print_exception()
         log_string(e)
