@@ -4,7 +4,7 @@ import h5py
 import numpy as np
 import tensorflow as tf
 import socket
-
+from tqdm import tqdm
 import os
 import sys
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -88,6 +88,7 @@ train_data = data_batches[train_idxs,...]
 train_label = label_batches[train_idxs]
 test_data = data_batches[test_idxs,...]
 test_label = label_batches[test_idxs]
+print('Data shape')
 print(train_data.shape, train_label.shape)
 print(test_data.shape, test_label.shape)
 
@@ -207,7 +208,7 @@ def train_one_epoch(sess, ops, train_writer):
     total_seen = 0
     loss_sum = 0
     
-    for batch_idx in range(num_batches):
+    for batch_idx in tqdm(range(num_batches)):
         if batch_idx % 100 == 0:
             print('Current batch/total batch num: %d/%d'%(batch_idx,num_batches))
         start_idx = batch_idx * BATCH_SIZE

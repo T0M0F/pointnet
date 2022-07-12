@@ -1,6 +1,7 @@
 name: pointnet
 dependencies:
 - python=2.7
+- tqdm
 - pip
 - pip:
   - tensorflow==1.0.1
