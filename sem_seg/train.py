@@ -93,8 +93,6 @@ print(train_data.shape, train_label.shape)
 print(test_data.shape, test_label.shape)
 
 
-
-
 def log_string(out_str):
     LOG_FOUT.write(out_str+'\n')
     LOG_FOUT.flush()
@@ -198,7 +196,7 @@ def train_one_epoch(sess, ops, train_writer):
     """ ops: dict mapping from string to tf ops """
     is_training = True
     
-    log_string('----')
+    log_string('-- Train --')
     current_data, current_label, _ = provider.shuffle_data(train_data[:,0:NUM_POINT,:], train_label) 
     
     file_size = current_data.shape[0]
@@ -208,9 +206,9 @@ def train_one_epoch(sess, ops, train_writer):
     total_seen = 0
     loss_sum = 0
     
-    for batch_idx in tqdm(range(num_batches)):
-        if batch_idx % 100 == 0:
-            print('Current batch/total batch num: %d/%d'%(batch_idx,num_batches))
+    for batch_idx in tqdm(range(num_batches), desc="Current batch/total batch num"):
+        if batch_idx % 10 == 0:
+            log_string('Current batch/total batch num: %d/%d'%(batch_idx,num_batches))
         start_idx = batch_idx * BATCH_SIZE
         end_idx = (batch_idx+1) * BATCH_SIZE
         
@@ -239,7 +237,7 @@ def eval_one_epoch(sess, ops, test_writer):
     total_seen_class = [0 for _ in range(NUM_CLASSES)]
     total_correct_class = [0 for _ in range(NUM_CLASSES)]
     
-    log_string('----')
+    log_string('-- Eval --')
     current_data = test_data[:,0:NUM_POINT,:]
     current_label = np.squeeze(test_label)
     
@@ -272,7 +270,10 @@ def eval_one_epoch(sess, ops, test_writer):
     log_string('eval avg class acc: %f' % (np.mean(np.array(total_correct_class)/np.array(total_seen_class,dtype=np.float))))
          
 
-
 if __name__ == "__main__":
-    train()
-    LOG_FOUT.close()
+    try:
+        train()
+        LOG_FOUT.close()
+    except Exception as e:
+        print(e)
+        log_string(e)
