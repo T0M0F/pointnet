@@ -29,6 +29,7 @@ parser.add_argument('--optimizer', default='adam', help='adam or momentum [defau
 parser.add_argument('--decay_step', type=int, default=300000, help='Decay step for lr decay [default: 300000]')
 parser.add_argument('--decay_rate', type=float, default=0.5, help='Decay rate for lr decay [default: 0.5]')
 parser.add_argument('--test_area', type=int, default=6, help='Which area to use for test, option: 1-6 [default: 6]')
+parser.add_argument('--checkpoint_path', type=str, default=None, help='Load checkpoint from path')
 FLAGS = parser.parse_args()
 
 
@@ -50,6 +51,8 @@ os.system('cp model.py %s' % (LOG_DIR)) # bkp of model def
 os.system('cp train.py %s' % (LOG_DIR)) # bkp of train procedure
 LOG_FOUT = open(os.path.join(LOG_DIR, 'log_train.txt'), 'w')
 LOG_FOUT.write(str(FLAGS)+'\n')
+
+CHECKPOINT_PATH = FLAGS.checkpoint_path
 
 MAX_NUM_POINT = 4096
 NUM_CLASSES = 13
@@ -170,6 +173,15 @@ def train():
 
         # Init variables
         init = tf.global_variables_initializer()
+
+        START_EPOCH = 0
+
+        if CHECKPOINT_PATH != None:
+            # Restore checkpoint
+            saver.restore(sess, CHECKPOINT_PATH)
+            START_EPOCH = int(CHECKPOINT_PATH.split("/")[-1].split(".")[0][5:])
+            log_string("Checkpoint restored.")
+        
         sess.run(init, {is_training_pl:True})
 
         ops = {'pointclouds_pl': pointclouds_pl,
@@ -181,7 +193,7 @@ def train():
                'merged': merged,
                'step': batch}
 
-        for epoch in range(MAX_EPOCH):
+        for epoch in range(START_EPOCH, MAX_EPOCH):
             log_string('**** EPOCH %03d ****' % (epoch))
             sys.stdout.flush()
              
