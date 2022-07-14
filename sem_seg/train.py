@@ -171,18 +171,16 @@ def train():
                                   sess.graph)
         test_writer = tf.summary.FileWriter(os.path.join(LOG_DIR, 'test'))
 
-        # Init variables
-        init = tf.global_variables_initializer()
-
         START_EPOCH = 0
 
         if CHECKPOINT_PATH != None:
             # Restore checkpoint
-            saver.restore(sess, CHECKPOINT_PATH)
+            ckpt = tf.train.get_checkpoint_state(os.path.dirname(CHECKPOINT_PATH))
+            saver.restore(sess, ckpt.model_checkpoint_path)
             START_EPOCH = int(CHECKPOINT_PATH.split("/")[-1].split(".")[0][5:])
             log_string("Checkpoint restored.")
-        
-        sess.run(init, {is_training_pl:True})
+        else:
+            sess.run(tf.global_variables_initializer(), {is_training_pl:True})
 
         ops = {'pointclouds_pl': pointclouds_pl,
                'labels_pl': labels_pl,
@@ -216,10 +214,10 @@ def train_one_epoch(sess, ops, train_writer):
     
     file_size = current_data.shape[0]
     num_batches = file_size // BATCH_SIZE
+
     total_correct = 0
     total_seen = 0
     loss_sum = 0
-    
     for batch_idx in tqdm(range(num_batches), desc="Current batch/total batch num"):
         if batch_idx % 10 == 0:
             log_string('Current batch/total batch num: %d/%d'%(batch_idx,num_batches), print_out=False)
