@@ -177,7 +177,7 @@ def train():
             # Restore checkpoint
             ckpt = tf.train.get_checkpoint_state(os.path.dirname(CHECKPOINT_PATH))
             saver.restore(sess, ckpt.model_checkpoint_path)
-            START_EPOCH = int(CHECKPOINT_PATH.split("/")[-1].split(".")[0][5:])
+            START_EPOCH = int(CHECKPOINT_PATH.split("/")[-1].split(".")[0][5:]) + 1
             log_string("Checkpoint restored.")
         else:
             sess.run(tf.global_variables_initializer(), {is_training_pl:True})
