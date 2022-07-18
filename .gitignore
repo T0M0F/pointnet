@@ -1,0 +1,3 @@
+sem_seg/Stanford3dDataset_v1.2_Aligned_Version-004
+sem_seg/indoor3d_sem_seg_hdf5_data/
+*.pyc

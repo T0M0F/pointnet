@@ -1,0 +1,99 @@
+Namespace(batch_size=1, dump_dir='log6/dump', gpu=0, model_path='log6_3models/model16.ckpt', no_clutter=False, num_point=4096, output_filelist='log6/output_filelist.txt', room_data_filelist='meta/area6_data_label.txt', visu=True)
+Model restored.
+eval mean loss: 0.282569
+eval accuracy: 0.903727
+eval mean loss: 0.880033
+eval accuracy: 0.820740
+eval mean loss: 0.653874
+eval accuracy: 0.812761
+eval mean loss: 0.396046
+eval accuracy: 0.874238
+eval mean loss: 0.241371
+eval accuracy: 0.905640
+eval mean loss: 0.873017
+eval accuracy: 0.808545
+eval mean loss: 0.277602
+eval accuracy: 0.902437
+eval mean loss: 1.554247
+eval accuracy: 0.692600
+eval mean loss: 1.542546
+eval accuracy: 0.715479
+eval mean loss: 0.629710
+eval accuracy: 0.816589
+eval mean loss: 0.581728
+eval accuracy: 0.794647
+eval mean loss: 1.011085
+eval accuracy: 0.754747
+eval mean loss: 0.259080
+eval accuracy: 0.904643
+eval mean loss: 0.386052
+eval accuracy: 0.875061
+eval mean loss: 0.373082
+eval accuracy: 0.864176
+eval mean loss: 0.378968
+eval accuracy: 0.865804
+eval mean loss: 0.333628
+eval accuracy: 0.882914
+eval mean loss: 0.300451
+eval accuracy: 0.917908
+eval mean loss: 0.299428
+eval accuracy: 0.921244
+eval mean loss: 0.494996
+eval accuracy: 0.842095
+eval mean loss: 0.247504
+eval accuracy: 0.912923
+eval mean loss: 0.266573
+eval accuracy: 0.908875
+eval mean loss: 0.656722
+eval accuracy: 0.778809
+eval mean loss: 0.211732
+eval accuracy: 0.931858
+eval mean loss: 0.358377
+eval accuracy: 0.864217
+eval mean loss: 0.315530
+eval accuracy: 0.895589
+eval mean loss: 0.327295
+eval accuracy: 0.878699
+eval mean loss: 0.322988
+eval accuracy: 0.886420
+eval mean loss: 0.377518
+eval accuracy: 0.867676
+eval mean loss: 0.296219
+eval accuracy: 0.907308
+eval mean loss: 0.250571
+eval accuracy: 0.915826
+eval mean loss: 0.311741
+eval accuracy: 0.887980
+eval mean loss: 0.549229
+eval accuracy: 0.812378
+eval mean loss: 0.439076
+eval accuracy: 0.861033
+eval mean loss: 0.357496
+eval accuracy: 0.880981
+eval mean loss: 0.303679
+eval accuracy: 0.908135
+eval mean loss: 0.409504
+eval accuracy: 0.863186
+eval mean loss: 0.403016
+eval accuracy: 0.864041
+eval mean loss: 0.527406
+eval accuracy: 0.851061
+eval mean loss: 0.324243
+eval accuracy: 0.890951
+eval mean loss: 0.284575
+eval accuracy: 0.910021
+eval mean loss: 0.370069
+eval accuracy: 0.883097
+eval mean loss: 0.817469
+eval accuracy: 0.802138
+eval mean loss: 0.595548
+eval accuracy: 0.807617
+eval mean loss: 0.543316
+eval accuracy: 0.825823
+eval mean loss: 1.005389
+eval accuracy: 0.735226
+eval mean loss: 0.696218
+eval accuracy: 0.827595
+eval mean loss: 0.767065
+eval accuracy: 0.788513
+all room eval accuracy: 0.843243
